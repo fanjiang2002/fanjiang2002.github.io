@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專利查詢系統</title>
+    <style>
+        /* 全局樣式設置 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* 頂部標題樣式 */
+        h1 {
+            text-align: center;
+            color: #0056b3;
+            padding: 20px 0;
+            background-color: #e9f0f8;
+            margin: 0;
+            font-size: 2em;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        /* 表單和內容居中設置 */
+        .container {
+            width: 100%;
+            padding: 40px 5%;
+            box-sizing: border-box;
+        }
+        
+        /* 表單樣式 */
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        textarea {
+            width: 80%;
+            max-width: 1000px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 1em;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #003f7f;
+        }
+
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.1em;
+            text-align: left;
+        }
+        th, td {
+            padding: 16px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #0056b3;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 沒有記錄時的提示 */
+        .no-records {
+            color: #666;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>專利查詢系統</h1>
+    <div class="container">
+        <form method="POST" action="/">
+            <label for="question">輸入您的查詢問題：</label><br>
+            <textarea id="question" name="question" rows="4"></textarea><br><br>
+            <button type="submit">查詢</button>
+        </form>
+
+        {% if records is defined %}
+            {% if records %}
+                <h2 style="text-align: center; color: #0056b3;">查詢結果</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>公開/公告號</th>
+                            <th>公開/公告日</th>
+                            <th>申請號</th>
+                            <th>申請日</th>
+                            <th>專利名稱原文</th>
+                            <th>專利名稱英文</th>
+                            <th>IPC 分類號</th>
+                            <th>摘要分段內容</th>
+                            <th>專利範圍段落內容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in records %}
+                        <tr>
+                            <td>{{ record.get('公開_公告號', 'N/A') }}</td>
+                            <td>{{ record.get('公開_公告日', 'N/A') }}</td>
+                            <td>{{ record.get('申請號', 'N/A') }}</td>
+                            <td>{{ record.get('申請日', 'N/A') }}</td>
+                            <td>{{ record.get('專利名稱原文', 'N/A') }}</td>
+                            <td>{{ record.get('專利名稱英文', 'N/A') }}</td>
+                            <td>{{ record.get('IPC_分類號', 'N/A') }}</td>
+                            <td>{{ record.get('摘要分段內容', 'N/A') }}</td>
+                            <td>{{ record.get('專利範圍段落內容', 'N/A') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="no-records">未找到符合的記錄。</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
